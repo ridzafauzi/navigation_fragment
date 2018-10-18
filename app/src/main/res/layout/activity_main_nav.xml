@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the following layout uses a DrawerLayout with two child views: a linearLayout, and a NavigationView for the contents of the navigation drawer. -->
+<!-- Use DrawerLayout as root container for activity -->
+<!-- The custom view that represents the navigation drawer must be the first element in the layout -->
+<android.support.v4.widget.DrawerLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:id="@+id/drawer_layout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:fitsSystemWindows="true"
+     tools:context=".MainActivity"
+>
+
+	<LinearLayout
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	  <include layout="@layout/toolbar"/>
+
+	  <!-- Let's add fragment -->
+	  <!-- to hold the page content shown through fragments -->
+	  <FrameLayout	
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/frame"/>
+
+	</LinearLayout>
+
+	<!-- Declare the menu items for the nav drawer. To configure the menu items listed in the drawer, specify a menu resource with the app:menu attribute -->
+	<!-- NavigationView is the “real” menu of our app -->
+	<android.support.design.widget.NavigationView
+	  android:id="@+id/navigation"
+	  android:layout_width="wrap_content"
+	  android:layout_height="match_parent"
+	  android:layout_gravity="start"
+	  app:menu="@menu/nav_items"/>
+
+</android.support.v4.widget.DrawerLayout>
