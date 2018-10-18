@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Here we have defined a Menu using the <menu> which serves as a container for menu items. An <item> creates a MenuItem, which represents a single item in a menu. -->
+<!-- We then defined our first menu group using the <group>. A <group> serves as an invisible container for <item> elements—menu items in our case. 
+Each of the <item> elements has an id, an icon, and a title. Note that a horizontal line will be drawn at the end of each <group> for us when shown in the navigation drawer.  -->
+<!-- A <item> can also contain a nested <menu> element in order to create a submenu—we did just this in our last <item>. Notice that this last <item> has a title property. -->
+<!--Note that when showing the navigation list items from a menu resource, we could use a ListView instead. 
+But, by configuring the navigation drawer with a menu resource, we get the material design styling on the navigation drawer for free! 
+If you used a ListView, you would have to maintain the list and also style it to meet the recommended material design specs for the navigation drawer.  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <group android:id="@+id/group_menu">
+        <item android:id="@+id/nav_item_four"
+              android:title="Item 45" />
+        <item android:id="@+id/nav_item_five"
+              android:title="Item 55" />
+    </group>
+     
+</menu>

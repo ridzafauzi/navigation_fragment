@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,81 +17,62 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout dLayout;
-	private RelativeLayout layout;
+    private DrawerLayout mDrawerLayout;
+	private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-		layout = (RelativeLayout) findViewById(R.id.layout);
-        setNavigationDrawer();
+		
+		setNavigationDrawer();		
 		setToolBar(); //for toolbar
     }
 	
 
 	//Set the toolbar as the action bar. call setSupportActionBar() and pass the tb object from your layout
+	//Note that we also enable the app icon via setHomeButtonEnabled() and enable it for “up” navigation via setDisplayHomeAsUpEnabled(). 
 	private void setToolBar() {
-        Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-
-        ActionBar ab = getSupportActionBar();
-		ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);        
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);       
     }
 	
 
-	//To handle when user clicks on an item
+	// To handle when user clicks on an item
 	private void setNavigationDrawer() {
-		dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		NavigationView navView = (NavigationView) findViewById(R.id.navigation);
-		navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-			@Override
-			public boolean onNavigationItemSelected(MenuItem menuItem) {
+		mDrawerLayout = findViewById(R.id.drawer_layout);
 
-				Fragment frag = null;
-				int itemId = menuItem.getItemId();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+            new NavigationView.OnNavigationItemSelectedListener() {
+				@Override
+				public boolean onNavigationItemSelected(MenuItem menuItem) {
+					// set item as selected to persist highlight
+					menuItem.setChecked(true);
+					// close drawer when item is tapped
+					mDrawerLayout.closeDrawers();
 
-				if (itemId == R.id.fab) {
-					frag = new Fragment1();
-				}
-				else if (itemId == R.id.star) {
-					frag = new Fragment2();
-				}
+					// Add code here to update the UI based on the item selected
+					// For example, swap UI fragments here
 
-				if (frag != null) {
-					FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-					transaction.replace(R.id.frame, frag);
-					transaction.commit();
-					dLayout.closeDrawers();
 					return true;
 				}
-
-				return false;
-			}
-		});
+			});
 	}
 	
-	
-    @Override
-	//simply add a listener to know when one of the menu item is pressed by user and then set the right fragment
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        String btnName = null;
-
-        switch(itemId) {
-            // Android home. opening the drawer when user clicks on the home icon
-            case android.R.id.home: {
-                dLayout.openDrawer(GravityCompat.START);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            }
         }
-
-        Snackbar.make(layout, "Button " + btnName, Snackbar.LENGTH_SHORT).show();
-        return true;
-		
+        return super.onOptionsItemSelected(item);
     }
+    
 }
 	
 
