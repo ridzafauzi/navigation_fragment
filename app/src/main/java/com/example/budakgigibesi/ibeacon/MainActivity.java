@@ -15,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.budakgigibesi.ibeacon.fragment_main;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle toggle;
@@ -24,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+		
+		//getSupportFragmentManager().beginTransaction()
+        //            .replace(R.id.container, fragment_main.newInstance())
+        //            .commitNow();
 		
 		setNavigationDrawer();		
 		setToolBar(); //for toolbar
@@ -46,22 +52,10 @@ public class MainActivity extends AppCompatActivity {
 		mDrawerLayout = findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(
-            new NavigationView.OnNavigationItemSelectedListener() {
-				@Override
-				public boolean onNavigationItemSelected(MenuItem menuItem) {
-					// set item as selected to persist highlight
-					menuItem.setChecked(true);
-					// close drawer when item is tapped
-					mDrawerLayout.closeDrawers();
-
-					// Add code here to update the UI based on the item selected
-					// For example, swap UI fragments here
-
-					return true;
-				}
-			});
+        navigationView.setNavigationItemSelectedListener(this);
 	}
+	
+	
 	
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -72,7 +66,34 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    
+	
+	@SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+		
+		int id = item.getItemId();
+        Fragment fragment = null;
+        if (id == R.id.nav_item_four) {
+            fragment = new fragment4();
+            displaySelectedFragment(fragment);
+        } else if (id == R.id.nav_item_five) {
+            fragment = new fragment5();
+            displaySelectedFragment(fragment);
+		}
+		
+        // close drawer when item is tapped
+		mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+	private void displaySelectedFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.commit();
+		
+    }
+	
 }
 	
 
