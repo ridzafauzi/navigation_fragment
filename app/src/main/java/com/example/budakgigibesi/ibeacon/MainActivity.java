@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	private void displaySelectedFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.replace(R.id.dyn_container, fragment);
         fragmentTransaction.commit();
 		
     }
