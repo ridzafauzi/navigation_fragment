@@ -15,8 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
-import com.example.budakgigibesi.ibeacon.fragment_main;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
@@ -25,14 +23,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);		
 		
-		//getSupportFragmentManager().beginTransaction()
-        //            .replace(R.id.container, fragment_main.newInstance())
-        //            .commitNow();
+		setNavigationDrawer();	//set the drawer
+		setToolBar(); //set the toolbar
 		
-		setNavigationDrawer();		
-		setToolBar(); //for toolbar
+		// display home fragment
+		Fragment fragment = null;
+		fragment = new fragmentHome();
+        displaySelectedFragment(fragment);
+		
+		//enable beacon features///////////////////////////////////////////////////////////////////////
+		
+		//BeaconManager beaconManager = org.altbeacon.beacon.BeaconManager.getInstanceForApplication(this);
+		//beaconManager.getBeaconParsers().clear();
+        //beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+		//beaconManager.setEnableScheduledScanJobs(false);	// disable JobScheduler-based scans (used on Android 8+)
+        //beaconManager.setBackgroundBetweenScanPeriod(0);	// set the time between each scan to be 1 hour (3600 seconds)
+        //beaconManager.setBackgroundScanPeriod(1100);	// set the duration of the scan to be 1.1 seconds
+		
+        //Region region = new Region("backgroundRegion", null, null, null);
+        //regionBootstrap = new RegionBootstrap(this, region);	// wake up the app when a beacon is seen
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////
     }
 	
 
@@ -93,6 +106,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
 		
     }
+	
+	//@Override
+    //public void didEnterRegion(Region arg0) {
+    //    monitoringActivity.logToDisplay("I see a beacon again" );        
+    //}
+	
+	//@Override
+    //public void didExitRegion(Region region) {
+    //    if (monitoringActivity != null) {
+    //        monitoringActivity.logToDisplay("I no longer see a beacon.");
+    //    }
+    //}
 	
 }
 	
